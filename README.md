@@ -56,8 +56,8 @@ Data for each service is persisted in a dedicated folder under the `./volumes` d
    Clone this repository to your local machine and navigate to its directory:
 
    ```bash
-   git clone <repository-url>
-   cd <repository-directory>
+   git clone https://github.com/MetythornPenn/database
+   cd database
 
 2. **Create the Volume Directories**
 
