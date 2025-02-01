@@ -22,26 +22,26 @@ Data for each service is persisted in a dedicated folder under the `./volumes` d
 
 ### MySQL
 - **Image:** `mysql:8`
-- **Port:** `3306`
-- **GUI:** phpMyAdmin available at [http://localhost:8081](http://localhost:8081)
+- **Port:** `2000` internal `3306`
+- **GUI:** phpMyAdmin available at [http://localhost:2001](http://localhost:2001)
 - **Data Directory:** `./volumes/mysql`
 
 ### PostgreSQL (with pgvector)
 - **Image:** `ankane/pgvector:latest`
-- **Port:** `5432`
-- **GUI:** pgAdmin available at [http://localhost:8082](http://localhost:8082)
+- **Port:** `2002` internal `5432`
+- **GUI:** pgAdmin available at [http://localhost:2003](http://localhost:2003)
 - **Data Directory:** `./volumes/postgres`
 
 ### Oracle XE
 - **Image:** `gvenzl/oracle-xe:18-slim`
-- **Port:** `1521`
-- **GUI:** Adminer available at [http://localhost:8083](http://localhost:8083)
+- **Port:** `2004` internal `1521`
+- **GUI:** Adminer available at [http://localhost:2005](http://localhost:2005)
 - **Data Directory:** `./volumes/oracle`
 
 ### MongoDB
 - **Image:** `mongo:latest`
-- **Port:** `27017`
-- **GUI:** Mongo Express available at [http://localhost:8084](http://localhost:8084)
+- **Port:** `2006` internal `27017`
+- **GUI:** Mongo Express available at [http://localhost:2007](http://localhost:2007)
 - **Data Directory:** `./volumes/mongodb`
 
 ## Prerequisites
@@ -73,10 +73,10 @@ mkdir -p volumes/mysql volumes/postgres volumes/oracle volumes/mongodb
 
 4. **Access the GUIs**
 
-- phpMyAdmin (MySQL): http://localhost:8081
-- pgAdmin (PostgreSQL): http://localhost:8082
-- Adminer (Oracle XE): http://localhost:8083
-- Mongo Express (MongoDB): http://localhost:8084
+- phpMyAdmin (MySQL): http://localhost:2001
+- pgAdmin (PostgreSQL): http://localhost:2003
+- Adminer (Oracle XE): http://localhost:2005
+- Mongo Express (MongoDB): http://localhost:2007
 
 5. **Connect to the Database**
 
