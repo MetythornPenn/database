@@ -1,0 +1,107 @@
+version: "3.8"
+
+services:
+  ### MySQL and its GUI (phpMyAdmin)
+  mysql:
+    image: mysql:8
+    container_name: mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: db
+    ports:
+      - "2000:3306"
+    volumes:
+      - ./volumes/mysql:/var/lib/mysql
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    container_name: phpmyadmin
+    restart: always
+    environment:
+      PMA_HOST: mysql
+      PMA_USER: root
+      PMA_PASSWORD: root
+    ports:
+      - "2001:80"
+    depends_on:
+      - mysql
+
+  ### PostgreSQL with pgvector extension merged into a single container
+  postgres:
+    image: ankane/pgvector:latest
+    container_name: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: db
+    ports:
+      - "2002:5432"
+    volumes:
+      - ./volumes/postgres:/var/lib/postgresql/data
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: pgadmin
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: root@localhost
+      PGADMIN_DEFAULT_PASSWORD: root
+    ports:
+      - "2003:80"
+    depends_on:
+      - postgres
+
+  ### Oracle XE and its GUI (Adminer)
+  oracle:
+    image: gvenzl/oracle-xe:18-slim
+    container_name: oracle
+    restart: always
+    environment:
+      ORACLE_PASSWORD: root
+    ports:
+      - "2004:1521"
+    volumes:
+      - ./volumes/oracle:/opt/oracle/oradata
+
+  adminer:
+    image: adminer:latest
+    container_name: adminer
+    restart: always
+    ports:
+      - "2005:8080"
+    depends_on:
+      - oracle
+    environment:
+      - ADMINER_DESIGN=pepa-linha-dark
+    # When connecting via Adminer, select the Oracle driver and use:
+    #   Server: oracle (or your host IP)
+    #   Username: root
+    #   Password: root
+
+  ### MongoDB and its GUI (Mongo Express)
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+    ports:
+      - "2006:27017"
+    volumes:
+      - ./volumes/mongodb:/data/db
+
+  mongo-express:
+    image: mongo-express:latest
+    container_name: mongo-express
+    restart: always
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: root
+      ME_CONFIG_MONGODB_SERVER: mongodb
+    ports:
+      - "2007:8081"
+    depends_on:
+      - mongodb
